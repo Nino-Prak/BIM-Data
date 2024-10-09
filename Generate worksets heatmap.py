@@ -38,14 +38,14 @@ if uploaded_file is not None:
     fig_height = square_size * n_rows
 
     # Cap the figure size to prevent it from getting too large
-    max_width = 100  # Set a higher max width to fit long x-axis labels
-    max_height = 50  # Set a higher max height to allow better y-axis visibility
+    max_width = 20  # Adjusted for more reasonable display on Streamlit
+    max_height = 10  # Adjusted for Streamlit app height
     fig_width = min(fig_width, max_width)
     fig_height = min(fig_height, max_height)
 
     # Plot setting
-    plt.figure(figsize=(fig_width, fig_height))
-    ax = sns.heatmap(pivot_table_combined, cmap="Blues", cbar=False, linewidths=0.5, linecolor='black', square=True)
+    fig, ax = plt.subplots(figsize=(fig_width, fig_height))
+    sns.heatmap(pivot_table_combined, cmap="Blues", cbar=False, linewidths=0.5, linecolor='black', square=True, ax=ax)
     ax.xaxis.set_label_position('top')
     ax.xaxis.tick_top()
 
@@ -55,8 +55,6 @@ if uploaded_file is not None:
     plt.xlabel('Revit Models', fontsize=14, fontweight='bold')
     plt.ylabel('Worksets', fontsize=14, fontweight='bold')
 
-    # Adjust layout for better fit
-    plt.tight_layout()
-
     # Display the plot in the Streamlit app
-    st.pyplot(plt)
+    st.pyplot(fig)
+
